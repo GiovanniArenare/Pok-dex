@@ -1,1 +1,110 @@
-/* O visual do painel é definido no App.css para manter a identidade da Pokédex. */
+.painel-filtros {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 1fr auto;
+    align-items: end;
+    gap: 14px;
+    margin: 0 0 32px;
+    padding: 22px;
+    border: 1px solid #e6dfd3;
+    border-radius: 22px;
+    background: #fffdf8;
+    box-shadow: 0 8px 25px #493f2810;
+}
+
+.campo-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo-filtro label {
+    color: #252b3b;
+    font-size: 0.84rem;
+    font-weight: 900;
+}
+
+.campo-filtro input,
+.campo-filtro select {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 14px;
+    border: 1px solid #dedbd4;
+    border-radius: 12px;
+    background: #fff;
+    color: #252b3b;
+    font: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo-filtro input:focus,
+.campo-filtro select:focus {
+    border-color: #e83e45;
+    box-shadow: 0 0 0 4px #e83e4518;
+    outline: none;
+}
+
+.campo-filtro input::placeholder {
+    color: #a4a6ad;
+}
+
+.botoes-filtros {
+    display: flex;
+    gap: 8px;
+}
+
+.botoes-filtros button {
+    padding: 13px 18px;
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 900;
+    transition: transform 0.18s, background 0.18s;
+}
+
+.botoes-filtros button:hover {
+    transform: translateY(-2px);
+}
+
+.botao-filtrar {
+    background: #e83e45;
+    color: #fff;
+    box-shadow: 0 4px 0 #c92736;
+}
+
+.botao-filtrar:hover {
+    background: #c92736;
+}
+
+.botao-limpar {
+    background: #f0eee8;
+    color: #555d6d;
+}
+
+.botao-limpar:hover {
+    background: #e5e1d8;
+}
+
+@media (max-width: 1120px) {
+    .painel-filtros {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .botoes-filtros {
+        grid-column: 1 / -1;
+    }
+
+    .botoes-filtros button {
+        flex: 1;
+    }
+}
+
+@media (max-width: 520px) {
+    .painel-filtros {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .botoes-filtros {
+        grid-column: auto;
+    }
+}

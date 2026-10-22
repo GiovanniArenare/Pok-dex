@@ -1,10 +1,12 @@
+
 .painel-treinador {
   margin: 28px 0;
-  padding: 22px;
-  border: 1px solid #2c2c2c;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #141414, #0b0b0b);
-  color: #f5f5f5;
+  padding: 24px;
+  border: 1px solid #e9e5dc;
+  border-radius: 20px;
+  background: #fffdf8;
+  color: #252b3b;
+  box-shadow: 0 8px 24px rgb(37 43 59 / 6%);
 }
 
 .painel-treinador-cabecalho {
@@ -13,20 +15,24 @@
   justify-content: space-between;
   gap: 18px;
   padding-bottom: 18px;
-  border-bottom: 1px solid #2c2c2c;
+  border-bottom: 1px solid #e9e5dc;
 }
 
 .painel-treinador-sobretitulo {
   margin: 0 0 6px;
-  color: #0bd800;
+  color: #e83e45;
   font-size: 0.72rem;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .painel-treinador-cabecalho h2 {
   margin: 0;
+  color: #252b3b;
+  font-family: "Space Grotesk", sans-serif;
   font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 700;
 }
 
 .painel-treinador-insignias {
@@ -34,9 +40,9 @@
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
-  border: 1px solid #31552d;
-  border-radius: 12px;
-  background: #101d0e;
+  border: 1px solid #f0d46c;
+  border-radius: 14px;
+  background: #fff4c7;
 }
 
 .painel-treinador-insignias > span {
@@ -49,51 +55,70 @@
 }
 
 .painel-treinador-insignias strong {
-  color: #0bd800;
+  color: #c92736;
   font-size: 1.25rem;
 }
 
 .painel-treinador-insignias small {
-  color: #bbb;
+  color: #747b8b;
 }
 
 .painel-treinador-equipe h3 {
-  margin: 18px 0 12px;
+  margin: 20px 0 12px;
+  color: #252b3b;
   font-size: 1rem;
+  font-weight: 800;
 }
 
 .painel-treinador-lista {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 
 .painel-treinador-pokemon {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 11px;
-  border: 1px solid #292929;
-  border-radius: 10px;
-  background: #191919;
+  padding: 9px 13px;
+  border: 1px solid #e9e5dc;
+  border-radius: 12px;
+  background: #f6f4ee;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.painel-treinador-pokemon:hover {
+  transform: translateY(-2px);
+  border-color: #e83e45;
+  background: #fff4e9;
 }
 
 .painel-treinador-pokemon span {
-  color: #0bd800;
+  color: #e83e45;
   font-size: 0.8rem;
+  font-weight: 800;
 }
 
 .painel-treinador-pokemon strong {
+  color: #252b3b;
   text-transform: capitalize;
 }
 
 @media (max-width: 520px) {
   .painel-treinador {
     padding: 16px;
+    border-radius: 16px;
   }
 
   .painel-treinador-cabecalho {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .painel-treinador-insignias {
+    width: 100%;
   }
 }
