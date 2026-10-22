@@ -37,15 +37,11 @@ O projeto possui uma interface escura com detalhes em verde, cards de Pokémon e
 https://github.com/GiovanniArenare/Pok-dex.git
 ```
 
-Substitua `https://github.com/GiovanniArenare/Pok-dex.git` pelo endereço do repositório no GitHub.
-
 ### 2. Entrar na pasta do projeto
 
 ```bash
 cd Frontend
 ```
-
-Se o repositório já estiver organizado com o frontend na raiz, basta entrar na pasta clonada que contém o `package.json`.
 
 ### 3. Instalar as dependências
 
@@ -59,8 +55,6 @@ npm install
 npm run dev
 ```
 
-Abra no navegador o endereço apresentado pelo Vite. Por padrão, costuma ser:
-
 http://localhost:5173
 
 ### 5. Gerar a versão de produção
@@ -68,8 +62,6 @@ http://localhost:5173
 ```bash
 npm run build
 ```
-
-Os arquivos gerados serão colocados na pasta `dist`.
 
 Para testar essa versão localmente, execute:
 
