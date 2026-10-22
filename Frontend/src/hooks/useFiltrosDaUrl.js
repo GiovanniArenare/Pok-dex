@@ -1,49 +1,91 @@
+
 import { useCallback, useEffect, useState } from "react";
 
 /**
- * Guarda os filtros na URL, como o formulário GET do Thymeleaf fazia:
- *   /?cargo=GOVERNADOR&partido=PT&texto=ana
+ * Mantém os filtros da Pokédex sincronizados com a URL.
  *
- * Assim dá para copiar o link com o filtro aplicado, recarregar a página
- * e usar o botão "voltar" do navegador.
+ * Exemplo:
+ * /?nome=Pikachu&tipo=Electric&treinador=Ash
  *
- * const NOMES = ["cargo", "partido", "texto"]; // fora do componente
- * const { filtros, aplicarFiltros, limparFiltros } = useFiltrosDaUrl(NOMES);
+ * Funcionalidades:
+ * - Lê os filtros da URL ao abrir a página.
+ * - Atualiza a URL ao aplicar filtros.
+ * - Restaura os filtros ao navegar pelo histórico.
+ * - Permite limpar todos os filtros.
  */
+
 export default function useFiltrosDaUrl(nomes) {
+  const nomesChave = nomes.join("|");
+
   const lerDaUrl = useCallback(() => {
     const params = new URLSearchParams(window.location.search);
-    // parâmetro ausente vira "" (o "required = false" do @RequestParam)
-    return Object.fromEntries(nomes.map((nome) => [nome, params.get(nome) ?? ""]));
-  }, [nomes]);
+
+    return Object.fromEntries(
+      nomesChave
+        .split("|")
+        .filter(Boolean)
+        .map((nome) => [nome, params.get(nome) ?? ""])
+    );
+  }, [nomesChave]);
 
   const [filtros, setFiltros] = useState(lerDaUrl);
 
-  // botão voltar / avançar do navegador
   useEffect(() => {
-    const aoNavegar = () => setFiltros(lerDaUrl());
+    const aoNavegar = () => {
+      setFiltros(lerDaUrl());
+    };
+
     window.addEventListener("popstate", aoNavegar);
-    return () => window.removeEventListener("popstate", aoNavegar);
+
+    return () => {
+      window.removeEventListener("popstate", aoNavegar);
+    };
   }, [lerDaUrl]);
 
+  /**
+   * Aplica os filtros e atualiza a URL.
+   */
   const aplicarFiltros = useCallback(
-    (novos) => {
+    (novos = {}) => {
       const params = new URLSearchParams();
-      for (const nome of nomes) {
+
+      for (const nome of nomesChave.split("|").filter(Boolean)) {
         const valor = String(novos[nome] ?? "").trim();
-        if (valor !== "") params.set(nome, valor); // vazio não vai para a URL
+
+        if (valor) {
+          params.set(nome, valor);
+        }
       }
-      const busca = params.toString();
-      window.history.pushState(null, "", busca ? `?${busca}` : window.location.pathname);
+
+      const query = params.toString();
+
+      const novaUrl = query
+        ? `${window.location.pathname}?${query}${window.location.hash}`
+        : `${window.location.pathname}${window.location.hash}`;
+
+      window.history.pushState(null, "", novaUrl);
+
       setFiltros(lerDaUrl());
     },
-    [nomes, lerDaUrl]
+    [nomesChave, lerDaUrl]
   );
 
+  /**
+   * Limpa os filtros e remove seus parâmetros da URL.
+   */
   const limparFiltros = useCallback(() => {
-    window.history.pushState(null, "", window.location.pathname);
+    window.history.pushState(
+      null,
+      "",
+      `${window.location.pathname}${window.location.hash}`
+    );
+
     setFiltros(lerDaUrl());
   }, [lerDaUrl]);
 
-  return { filtros, aplicarFiltros, limparFiltros };
+  return {
+    filtros,
+    aplicarFiltros,
+    limparFiltros,
+  };
 }

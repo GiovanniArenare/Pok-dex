@@ -1,106 +1,152 @@
+
 import { useEffect, useState } from "react";
 import "./PainelFiltros.css";
 
-/**
- * Painel lateral de filtros: gênero (botões de opção), escolaridade (lista)
- * e faixa etária (idade mínima e máxima).
- * Os campos só valem quando a pessoa clica em "Filtrar", como no GET do Spring.
- */
-function PainelFiltros({ filtros, generos, escolaridades, onFiltrar, onLimpar }) {
-  const [form, setForm] = useState(filtros);
+function PainelFiltros({
+  filtros = {},
+  tipos = [],
+  treinadores = [],
+  onFiltrar,
+  onLimpar,
+}) {
+  const [form, setForm] = useState({
+    nome: "",
+    tipo: "",
+    treinador: "",
+    ...filtros,
+  });
 
-  // mantém o filtro marcado na tela (inclusive ao usar o "voltar" do navegador)
   useEffect(() => {
-    setForm(filtros);
+    setForm({
+      nome: "",
+      tipo: "",
+      treinador: "",
+      ...filtros,
+    });
   }, [filtros]);
 
-  const alterar = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const alterar = (e) => {
+    const { name, value } = e.target;
+
+    setForm((atual) => ({
+      ...atual,
+      [name]: value,
+    }));
+  };
 
   const enviar = (e) => {
     e.preventDefault();
-    onFiltrar(form);
+    onFiltrar?.(form);
   };
 
-  const limpar = (e) => {
-    e.preventDefault();
-    onLimpar();
+  const limpar = () => {
+    const filtrosVazios = {
+      nome: "",
+      tipo: "",
+      treinador: "",
+    };
+
+    setForm(filtrosVazios);
+    onLimpar?.();
   };
 
   return (
     <aside className="painel-filtros">
-      <form method="get" action="/" onSubmit={enviar}>
-        <fieldset className="grupo">
-          <legend>Gênero</legend>
-          <label className="opcao">
+      <div className="filtros-cabecalho">
+        <div className="filtros-icone">☷</div>
+
+        <div>
+          <h2>Filtros</h2>
+          <p>Encontre seu Pokémon</p>
+        </div>
+      </div>
+
+      <form onSubmit={enviar}>
+        <div className="grupo">
+          <label htmlFor="filtro-nome">
+            Nome do Pokémon
+          </label>
+
+          <div className="filtro-input-wrapper">
+            <span className="filtro-input-icone">⌕</span>
+
             <input
-              type="radio"
-              name="genero"
-              value=""
-              checked={form.genero === ""}
+              id="filtro-nome"
+              type="search"
+              name="nome"
+              placeholder="Ex.: Pikachu"
+              value={form.nome ?? ""}
               onChange={alterar}
             />
-            Todos
-          </label>
-          {generos.map((g) => (
-            <label className="opcao" key={g}>
-              <input
-                type="radio"
-                name="genero"
-                value={g}
-                checked={form.genero === g}
-                onChange={alterar}
-              />
-              <span>{g}</span>
-            </label>
-          ))}
-        </fieldset>
+          </div>
+        </div>
 
         <div className="grupo">
-          <label htmlFor="escolaridade">Escolaridade</label>
-          <select id="escolaridade" name="escolaridade" value={form.escolaridade} onChange={alterar}>
-            <option value="">Todas</option>
-            {escolaridades.map((e) => (
-              <option key={e} value={e}>
-                {e}
+          <label htmlFor="filtro-tipo">Tipo</label>
+
+          <select
+            id="filtro-tipo"
+            name="tipo"
+            value={form.tipo ?? ""}
+            onChange={alterar}
+          >
+            <option value="">Todos os tipos</option>
+
+            {tipos.map((tipo) => (
+              <option key={tipo.id} value={tipo.name}>
+                {tipo.name}
               </option>
             ))}
           </select>
         </div>
 
         <div className="grupo">
-          <span className="rotulo">Faixa etária</span>
-          <div className="faixa-idade">
-            <input
-              type="number"
-              name="idadeMin"
-              min="18"
-              max="100"
-              placeholder="De"
-              aria-label="Idade mínima"
-              value={form.idadeMin}
-              onChange={alterar}
-            />
-            <span>até</span>
-            <input
-              type="number"
-              name="idadeMax"
-              min="18"
-              max="100"
-              placeholder="Até"
-              aria-label="Idade máxima"
-              value={form.idadeMax}
-              onChange={alterar}
-            />
-          </div>
+          <label htmlFor="filtro-treinador">
+            Treinador
+          </label>
+
+          <select
+            id="filtro-treinador"
+            name="treinador"
+            value={form.treinador ?? ""}
+            onChange={alterar}
+          >
+            <option value="">Todos os treinadores</option>
+
+            {treinadores.map((treinador) => (
+              <option
+                key={treinador.id}
+                value={treinador.name}
+              >
+                {treinador.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="botoes">
-          <button type="submit">Filtrar</button>
-          <a href="/" className="limpar" onClick={limpar}>
-            Limpar
-          </a>
+          <button type="submit" className="botao-filtrar">
+            <span>⌕</span>
+            Aplicar filtros
+          </button>
+
+          <button
+            type="button"
+            className="botao-limpar"
+            onClick={limpar}
+          >
+            Limpar filtros
+          </button>
         </div>
       </form>
+
+      <div className="filtros-dica">
+        <span>💡</span>
+        <p>
+          Dica: combine nome, tipo e treinador para encontrar
+          exatamente quem procura.
+        </p>
+      </div>
     </aside>
   );
 }
