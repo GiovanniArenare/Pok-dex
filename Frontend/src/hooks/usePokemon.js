@@ -1,5 +1,6 @@
+
 import { useEffect, useState } from "react";
-import { carregarCsv } from "../services/pokedexService";
+import { carregarDados } from "../services/pokedexService";
 
 export default function usePokemon() {
   const [pokemon, setPokemon] = useState([]);
@@ -11,12 +12,12 @@ export default function usePokemon() {
   useEffect(() => {
     let ativo = true;
 
-    async function carregarDados() {
+    async function buscarDados() {
       try {
         setCarregando(true);
         setErro("");
 
-        const dados = await carregarCsv();
+        const dados = await carregarDados();
 
         if (!ativo) return;
 
@@ -38,7 +39,7 @@ export default function usePokemon() {
       }
     }
 
-    carregarDados();
+    buscarDados();
 
     return () => {
       ativo = false;

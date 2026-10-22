@@ -8,7 +8,7 @@ let pokemon = [];
 let tipos = [];
 let treinadores = [];
 
-export async function carregarCsv() {
+export async function carregarDados() {
   if (!promessaDados) {
     promessaDados = fetch(CAMINHO_JSON)
       .then((resposta) => {
@@ -37,7 +37,9 @@ export async function carregarCsv() {
           ...treinador,
           pokemon: (treinador.pokemonIds ?? [])
             .map((id) =>
-              pokemon.find((p) => Number(p.id) === Number(id))
+              pokemon.find(
+                (p) => Number(p.id) === Number(id)
+              )
             )
             .filter(Boolean),
         }));
@@ -46,7 +48,6 @@ export async function carregarCsv() {
         console.log("Tipos carregados:", tipos.length);
         console.log("Treinadores carregados:", treinadores.length);
 
-        // ESTA É A CORREÇÃO PRINCIPAL
         return {
           pokemon,
           tipos,
@@ -89,12 +90,20 @@ export function filtrar(lista, filtros = {}) {
 
   let resultado = lista;
 
+  // Filtro por nome ou ID
   if (nome) {
-    resultado = resultado.filter((p) =>
-      p.name.toLocaleLowerCase("pt-BR").includes(nome)
-    );
+    resultado = resultado.filter((p) => {
+      const nomePokemon = p.name.toLocaleLowerCase("pt-BR");
+      const idPokemon = String(p.id);
+
+      return (
+        nomePokemon.includes(nome) ||
+        idPokemon === nome
+      );
+    });
   }
 
+  // Filtro por tipo
   if (tipo) {
     resultado = resultado.filter((p) =>
       p.types.some(
@@ -103,16 +112,20 @@ export function filtrar(lista, filtros = {}) {
     );
   }
 
+  // Filtro por treinador
   if (treinador) {
     const selecionado = treinadores.find(
-      (t) => t.name.toLocaleLowerCase("pt-BR") === treinador
+      (t) =>
+        t.name.toLocaleLowerCase("pt-BR") === treinador
     );
 
     const ids = new Set(
-      selecionado?.pokemonIds?.map(Number) ?? []
+      selecionado?.pokemon.map((p) => String(p.id)) ?? []
     );
 
-    resultado = resultado.filter((p) => ids.has(Number(p.id)));
+    resultado = resultado.filter((p) =>
+      ids.has(String(p.id))
+    );
   }
 
   return resultado;

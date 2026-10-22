@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import "./PainelFiltros.css";
 
@@ -17,10 +18,17 @@ function PainelFiltros({
   function atualizarCampo(evento) {
     const { name, value } = evento.target;
 
-    setFormulario((atual) => ({
-      ...atual,
+    const novosFiltros = {
+      ...formulario,
       [name]: value,
-    }));
+    };
+
+    setFormulario(novosFiltros);
+
+    // Atualiza os resultados imediatamente ao digitar
+    if (name === "nome") {
+      onFiltrar(novosFiltros, true);
+    }
   }
 
   function enviarFormulario(evento) {
@@ -29,24 +37,28 @@ function PainelFiltros({
   }
 
   function limpar() {
-    setFormulario({
+    const filtrosVazios = {
       nome: "",
       tipo: "",
       treinador: "",
-    });
+    };
 
+    setFormulario(filtrosVazios);
     onLimpar();
   }
 
   return (
     <form className="painel-filtros" onSubmit={enviarFormulario}>
       <div className="campo-filtro">
-        <label htmlFor="filtro-nome">Nome do Pokémon</label>
+        <label htmlFor="filtro-nome">
+          Nome ou ID do Pokémon
+        </label>
+
         <input
           id="filtro-nome"
           name="nome"
           type="search"
-          placeholder="Ex.: Pikachu"
+          placeholder="Ex.: Pikachu ou 25"
           value={formulario.nome}
           onChange={atualizarCampo}
         />
@@ -54,6 +66,7 @@ function PainelFiltros({
 
       <div className="campo-filtro">
         <label htmlFor="filtro-tipo">Tipo</label>
+
         <select
           id="filtro-tipo"
           name="tipo"
@@ -72,6 +85,7 @@ function PainelFiltros({
 
       <div className="campo-filtro">
         <label htmlFor="filtro-treinador">Treinador</label>
+
         <select
           id="filtro-treinador"
           name="treinador"

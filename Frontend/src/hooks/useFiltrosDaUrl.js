@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useState } from "react";
 
 const FILTROS_INICIAIS = {
@@ -31,7 +32,7 @@ export default function useFiltrosDaUrl() {
     };
   }, []);
 
-  const aplicarFiltros = useCallback((novosFiltros) => {
+  const aplicarFiltros = useCallback((novosFiltros, substituir = false) => {
     const filtrosAtualizados = {
       ...FILTROS_INICIAIS,
       ...novosFiltros,
@@ -50,7 +51,12 @@ export default function useFiltrosDaUrl() {
       ? `${window.location.pathname}?${query}`
       : window.location.pathname;
 
-    window.history.pushState({}, "", novaUrl);
+    if (substituir) {
+      window.history.replaceState({}, "", novaUrl);
+    } else {
+      window.history.pushState({}, "", novaUrl);
+    }
+
     setFiltros(filtrosAtualizados);
   }, []);
 

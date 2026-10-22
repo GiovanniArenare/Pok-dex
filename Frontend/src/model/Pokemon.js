@@ -1,3 +1,4 @@
+
 export default class Pokemon {
   constructor({
     id,
@@ -8,6 +9,7 @@ export default class Pokemon {
     this.id = String(id ?? "");
     this.name = name ?? "Desconhecido";
     this.types = types;
+
     this.stats = {
       hp: Number(stats.hp) || 0,
       attack: Number(stats.attack) || 0,

@@ -1,0 +1,99 @@
+.painel-treinador {
+  margin: 28px 0;
+  padding: 22px;
+  border: 1px solid #2c2c2c;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #141414, #0b0b0b);
+  color: #f5f5f5;
+}
+
+.painel-treinador-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #2c2c2c;
+}
+
+.painel-treinador-sobretitulo {
+  margin: 0 0 6px;
+  color: #0bd800;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.painel-treinador-cabecalho h2 {
+  margin: 0;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+}
+
+.painel-treinador-insignias {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid #31552d;
+  border-radius: 12px;
+  background: #101d0e;
+}
+
+.painel-treinador-insignias > span {
+  font-size: 1.7rem;
+}
+
+.painel-treinador-insignias strong,
+.painel-treinador-insignias small {
+  display: block;
+}
+
+.painel-treinador-insignias strong {
+  color: #0bd800;
+  font-size: 1.25rem;
+}
+
+.painel-treinador-insignias small {
+  color: #bbb;
+}
+
+.painel-treinador-equipe h3 {
+  margin: 18px 0 12px;
+  font-size: 1rem;
+}
+
+.painel-treinador-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.painel-treinador-pokemon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: #191919;
+}
+
+.painel-treinador-pokemon span {
+  color: #0bd800;
+  font-size: 0.8rem;
+}
+
+.painel-treinador-pokemon strong {
+  text-transform: capitalize;
+}
+
+@media (max-width: 520px) {
+  .painel-treinador {
+    padding: 16px;
+  }
+
+  .painel-treinador-cabecalho {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
