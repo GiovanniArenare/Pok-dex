@@ -1,87 +1,63 @@
-
 import { useCallback, useEffect, useState } from "react";
 
-/**
- * Mantém os filtros da Pokédex sincronizados com a URL.
- *
- * Exemplo:
- * /?nome=Pikachu&tipo=Electric&treinador=Ash
- *
- * Funcionalidades:
- * - Lê os filtros da URL ao abrir a página.
- * - Atualiza a URL ao aplicar filtros.
- * - Restaura os filtros ao navegar pelo histórico.
- * - Permite limpar todos os filtros.
- */
+const FILTROS_INICIAIS = {
+  nome: "",
+  tipo: "",
+  treinador: "",
+};
 
-export default function useFiltrosDaUrl(nomes) {
-  const nomesChave = nomes.join("|");
+function lerFiltrosDaUrl() {
+  const parametros = new URLSearchParams(window.location.search);
 
-  const lerDaUrl = useCallback(() => {
-    const params = new URLSearchParams(window.location.search);
+  return {
+    nome: parametros.get("nome") ?? "",
+    tipo: parametros.get("tipo") ?? "",
+    treinador: parametros.get("treinador") ?? "",
+  };
+}
 
-    return Object.fromEntries(
-      nomesChave
-        .split("|")
-        .filter(Boolean)
-        .map((nome) => [nome, params.get(nome) ?? ""])
-    );
-  }, [nomesChave]);
-
-  const [filtros, setFiltros] = useState(lerDaUrl);
+export default function useFiltrosDaUrl() {
+  const [filtros, setFiltros] = useState(lerFiltrosDaUrl);
 
   useEffect(() => {
-    const aoNavegar = () => {
-      setFiltros(lerDaUrl());
-    };
+    function atualizarFiltros() {
+      setFiltros(lerFiltrosDaUrl());
+    }
 
-    window.addEventListener("popstate", aoNavegar);
+    window.addEventListener("popstate", atualizarFiltros);
 
     return () => {
-      window.removeEventListener("popstate", aoNavegar);
+      window.removeEventListener("popstate", atualizarFiltros);
     };
-  }, [lerDaUrl]);
+  }, []);
 
-  /**
-   * Aplica os filtros e atualiza a URL.
-   */
-  const aplicarFiltros = useCallback(
-    (novos = {}) => {
-      const params = new URLSearchParams();
+  const aplicarFiltros = useCallback((novosFiltros) => {
+    const filtrosAtualizados = {
+      ...FILTROS_INICIAIS,
+      ...novosFiltros,
+    };
 
-      for (const nome of nomesChave.split("|").filter(Boolean)) {
-        const valor = String(novos[nome] ?? "").trim();
+    const parametros = new URLSearchParams();
 
-        if (valor) {
-          params.set(nome, valor);
-        }
+    Object.entries(filtrosAtualizados).forEach(([chave, valor]) => {
+      if (String(valor ?? "").trim()) {
+        parametros.set(chave, String(valor).trim());
       }
+    });
 
-      const query = params.toString();
+    const query = parametros.toString();
+    const novaUrl = query
+      ? `${window.location.pathname}?${query}`
+      : window.location.pathname;
 
-      const novaUrl = query
-        ? `${window.location.pathname}?${query}${window.location.hash}`
-        : `${window.location.pathname}${window.location.hash}`;
+    window.history.pushState({}, "", novaUrl);
+    setFiltros(filtrosAtualizados);
+  }, []);
 
-      window.history.pushState(null, "", novaUrl);
-
-      setFiltros(lerDaUrl());
-    },
-    [nomesChave, lerDaUrl]
-  );
-
-  /**
-   * Limpa os filtros e remove seus parâmetros da URL.
-   */
   const limparFiltros = useCallback(() => {
-    window.history.pushState(
-      null,
-      "",
-      `${window.location.pathname}${window.location.hash}`
-    );
-
-    setFiltros(lerDaUrl());
-  }, [lerDaUrl]);
+    window.history.pushState({}, "", window.location.pathname);
+    setFiltros({ ...FILTROS_INICIAIS });
+  }, []);
 
   return {
     filtros,
