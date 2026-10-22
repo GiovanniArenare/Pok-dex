@@ -34,10 +34,10 @@ O projeto possui uma interface escura com detalhes em verde, cards de Pokémon e
 ### 1. Clonar o repositório
 
 ```bash
-[git clone URL_DO_REPOSITORIO](https://github.com/GiovanniArenare/Pok-dex.git)
+https://github.com/GiovanniArenare/Pok-dex.git
 ```
 
-Substitua `[URL_DO_REPOSITORIO](https://github.com/GiovanniArenare/Pok-dex.git)` pelo endereço do repositório no GitHub.
+Substitua `https://github.com/GiovanniArenare/Pok-dex.git` pelo endereço do repositório no GitHub.
 
 ### 2. Entrar na pasta do projeto
 
