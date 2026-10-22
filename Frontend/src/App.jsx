@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import "./App.css";
+
 import usePokemon from "./hooks/usePokemon";
 import useFiltrosDaUrl from "./hooks/useFiltrosDaUrl";
 import { filtrar } from "./services/pokedexService";
@@ -37,6 +38,7 @@ const pokemonDoTreinador = treinadorSelecionado?.pokemon ?? [];
         <p className="descricao-pokedex">
           Descubra Pokémon, consulte seus atributos e explore os tipos.
         </p>
+        <div className="pokebola-decorativa" aria-hidden="true" />
       </header>
 
       <section className="secao-pokedex">
