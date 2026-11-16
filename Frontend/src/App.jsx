@@ -28,7 +28,7 @@ function App() {
     [treinadores, filtros.treinador]
   );
 
-const pokemonDoTreinador = treinadorSelecionado?.pokemon ?? [];
+  const pokemonDoTreinador = treinadorSelecionado?.pokemon ?? [];
 
   return (
     <main className="app">
@@ -57,8 +57,8 @@ const pokemonDoTreinador = treinadorSelecionado?.pokemon ?? [];
             <p>Não foi possível carregar a Pokédex.</p>
             <p>{erro}</p>
             <p>
-              Confira se o arquivo está em{" "}
-              <code>public/data/pokedex-data.json</code>.
+              Verifique se a API Spring Boot está funcionando
+              em <code>http://localhost:8080</code>.
             </p>
           </div>
         )}

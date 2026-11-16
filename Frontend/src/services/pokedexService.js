@@ -1,29 +1,36 @@
 
 import Pokemon from "../model/Pokemon";
 
-const CAMINHO_JSON = `${import.meta.env.BASE_URL}data/pokedex-data.json`;
+const API_URL = "http://localhost:8080/api";
 
 let promessaDados = null;
 let pokemon = [];
 let tipos = [];
 let treinadores = [];
 
+async function buscarAPI(endpoint) {
+  const resposta = await fetch(`${API_URL}${endpoint}`);
+
+  if (!resposta.ok) {
+    throw new Error(
+      `Erro ao consultar ${endpoint}: ${resposta.status}`
+    );
+  }
+
+  return resposta.json();
+}
+
 export async function carregarDados() {
   if (!promessaDados) {
-    promessaDados = fetch(CAMINHO_JSON)
-      .then((resposta) => {
-        if (!resposta.ok) {
-          throw new Error(
-            `Erro ao carregar o JSON: ${resposta.status}`
-          );
-        }
+    promessaDados = Promise.all([
+      buscarAPI("/pokemons"),
+      buscarAPI("/types"),
+      buscarAPI("/trainers"),
+    ])
+      .then(([dadosPokemon, dadosTipos, dadosTreinadores]) => {
+        tipos = dadosTipos;
 
-        return resposta.json();
-      })
-      .then((dados) => {
-        tipos = dados.types ?? [];
-
-        pokemon = (dados.pokemon ?? []).map(
+        pokemon = dadosPokemon.map(
           (item) =>
             new Pokemon({
               id: item.id,
@@ -33,7 +40,7 @@ export async function carregarDados() {
             })
         );
 
-        treinadores = (dados.trainers ?? []).map((treinador) => ({
+        treinadores = dadosTreinadores.map((treinador) => ({
           ...treinador,
           pokemon: (treinador.pokemonIds ?? [])
             .map((id) =>
@@ -90,7 +97,6 @@ export function filtrar(lista, filtros = {}) {
 
   let resultado = lista;
 
-  // Filtro por nome ou ID
   if (nome) {
     resultado = resultado.filter((p) => {
       const nomePokemon = p.name.toLocaleLowerCase("pt-BR");
@@ -103,7 +109,6 @@ export function filtrar(lista, filtros = {}) {
     });
   }
 
-  // Filtro por tipo
   if (tipo) {
     resultado = resultado.filter((p) =>
       p.types.some(
@@ -112,7 +117,6 @@ export function filtrar(lista, filtros = {}) {
     );
   }
 
-  // Filtro por treinador
   if (treinador) {
     const selecionado = treinadores.find(
       (t) =>
