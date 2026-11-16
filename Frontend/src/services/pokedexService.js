@@ -134,3 +134,68 @@ export function filtrar(lista, filtros = {}) {
 
   return resultado;
 }
+
+
+export async function cadastrarPokemon(novoPokemon) {
+  const resposta = await fetch(`${API_URL}/pokemons`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(novoPokemon),
+  });
+
+  if (resposta.status === 409) {
+    throw new Error(
+      "Já existe um Pokémon cadastrado com esse ID."
+    );
+  }
+
+  if (!resposta.ok) {
+    throw new Error(
+      "Não foi possível cadastrar o Pokémon."
+    );
+  }
+
+  const pokemonCadastrado = await resposta.json();
+
+  return pokemonCadastrado;
+}
+
+export async function editarPokemon(id, dadosAtualizados) {
+  const resposta = await fetch(`${API_URL}/pokemons/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dadosAtualizados),
+  });
+
+  if (resposta.status === 404) {
+    throw new Error("Pokémon não encontrado no banco de dados.");
+  }
+
+  if (!resposta.ok) {
+    throw new Error("Não foi possível atualizar o Pokémon.");
+  }
+
+  const pokemonAtualizado = await resposta.json();
+
+  return pokemonAtualizado;
+}
+
+export async function excluirPokemon(id) {
+  const resposta = await fetch(`${API_URL}/pokemons/${id}`, {
+    method: "DELETE",
+  });
+
+  if (resposta.status === 404) {
+    throw new Error("Pokémon não encontrado no banco de dados.");
+  }
+
+  if (!resposta.ok) {
+    throw new Error("Não foi possível excluir o Pokémon.");
+  }
+}
+
+

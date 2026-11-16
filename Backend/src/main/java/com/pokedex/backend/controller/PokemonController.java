@@ -1,3 +1,4 @@
+
 package com.pokedex.backend.controller;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.pokedex.backend.model.Pokemon;
 import com.pokedex.backend.service.PokemonService;
+import com.pokedex.backend.service.PokemonIdService;
 
 @RestController
 @RequestMapping("/api/pokemons")
@@ -15,9 +17,14 @@ import com.pokedex.backend.service.PokemonService;
 public class PokemonController {
 
     private final PokemonService pokemonService;
+    private final PokemonIdService pokemonIdService;
 
-    public PokemonController(PokemonService pokemonService) {
+    public PokemonController(
+            PokemonService pokemonService,
+            PokemonIdService pokemonIdService) {
+
         this.pokemonService = pokemonService;
+        this.pokemonIdService = pokemonIdService;
     }
 
     @GetMapping
@@ -35,13 +42,9 @@ public class PokemonController {
     @PostMapping
     public ResponseEntity<Pokemon> cadastrar(@RequestBody Pokemon pokemon) {
 
-        if (pokemon.getId() == null) {
-            return ResponseEntity.badRequest().build();
-        }
+        Integer novoId = pokemonIdService.gerarProximoId();
 
-        if (pokemonService.existePorId(pokemon.getId())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+        pokemon.setId(novoId);
 
         Pokemon salvo = pokemonService.salvar(pokemon);
 
@@ -58,6 +61,7 @@ public class PokemonController {
         }
 
         pokemon.setId(id);
+
         Pokemon atualizado = pokemonService.salvar(pokemon);
 
         return ResponseEntity.ok(atualizado);

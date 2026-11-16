@@ -488,3 +488,103 @@
     transition: none;
   }
 }
+
+
+.detalhes-pokemon-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.detalhes-pokemon-rodape-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detalhes-pokemon-editar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #e53935;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.detalhes-pokemon-editar:hover {
+  background: #c62828;
+  transform: translateY(-2px);
+}
+
+.detalhes-pokemon-editar:focus-visible {
+  outline: 3px solid #e53935;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .detalhes-pokemon-rodape {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detalhes-pokemon-rodape-info {
+    justify-content: center;
+  }
+
+  .detalhes-pokemon-editar {
+    width: 100%;
+  }
+}
+
+
+.detalhes-pokemon-acoes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detalhes-pokemon-excluir {
+  padding: 11px 18px;
+  border: 1px solid #dc2626;
+  border-radius: 10px;
+  background: transparent;
+  color: #dc2626;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.detalhes-pokemon-excluir:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.detalhes-pokemon-excluir:focus-visible {
+  outline: 3px solid #dc2626;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .detalhes-pokemon-acoes {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .detalhes-pokemon-excluir,
+  .detalhes-pokemon-editar {
+    width: 100%;
+  }
+}
+

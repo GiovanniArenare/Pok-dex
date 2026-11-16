@@ -1,0 +1,145 @@
+
+.formulario-pokemon {
+  width: 100%;
+  margin: 24px 0;
+  padding: clamp(20px, 4vw, 32px);
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+.formulario-pokemon h2 {
+  margin: 0 0 8px;
+  color: #20242c;
+  font-size: 1.6rem;
+}
+
+.formulario-pokemon > p {
+  margin: 0 0 24px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.formulario-pokemon h3 {
+  margin: 28px 0 16px;
+  color: #20242c;
+  font-size: 1.15rem;
+}
+
+.formulario-pokemon-campos,
+.formulario-pokemon-atributos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.formulario-pokemon label {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 8px;
+  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.formulario-pokemon input,
+.formulario-pokemon select {
+  width: 100%;
+  min-width: 0;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #20242c;
+  font: inherit;
+  font-weight: 400;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formulario-pokemon input:focus,
+.formulario-pokemon select:focus {
+  outline: none;
+  border-color: #e53935;
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.12);
+}
+
+.formulario-pokemon-erro {
+  padding: 12px 16px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c !important;
+  font-weight: 600;
+}
+
+.formulario-pokemon-acoes {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.formulario-pokemon-acoes button {
+  min-height: 44px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.formulario-pokemon-acoes button:first-child {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.formulario-pokemon-acoes button:first-child:hover {
+  background: #e2e8f0;
+}
+
+.formulario-pokemon-acoes button:last-child {
+  background: #e53935;
+  color: #ffffff;
+}
+
+.formulario-pokemon-acoes button:last-child:hover {
+  background: #c62828;
+  transform: translateY(-2px);
+}
+
+.formulario-pokemon-acoes button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 600px) {
+  .formulario-pokemon {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .formulario-pokemon h2 {
+    font-size: 1.35rem;
+  }
+
+  .formulario-pokemon-campos,
+  .formulario-pokemon-atributos {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .formulario-pokemon-acoes {
+    flex-direction: column-reverse;
+  }
+
+  .formulario-pokemon-acoes button {
+    width: 100%;
+  }
+}

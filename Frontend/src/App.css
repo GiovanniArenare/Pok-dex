@@ -304,3 +304,141 @@ select:focus-visible {
         margin-top: 34px;
     }
 }
+
+
+.resultado-pokedex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.botao-cadastrar-pokemon {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #e53935;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.botao-cadastrar-pokemon:hover {
+  background: #c62828;
+  transform: translateY(-2px);
+}
+
+.botao-cadastrar-pokemon:focus-visible {
+  outline: 3px solid #222;
+  outline-offset: 3px;
+}
+
+.mensagem-sucesso-pokemon {
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px solid #a5d6a7;
+  border-radius: 12px;
+  background: #e8f5e9;
+  color: #256029;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .resultado-pokedex {
+    align-items: stretch;
+  }
+
+  .botao-cadastrar-pokemon {
+    width: 100%;
+  }
+}
+
+
+.modal-pokemon-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+.modal-pokemon-conteudo {
+  position: relative;
+  width: min(100%, 680px);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+}
+
+.modal-pokemon-conteudo .formulario-pokemon {
+  margin: 0;
+  border: none;
+  border-radius: 20px;
+  box-shadow: none;
+}
+
+.modal-pokemon-fechar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.modal-pokemon-fechar:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+  transform: rotate(90deg);
+}
+
+.modal-pokemon-fechar:focus-visible {
+  outline: 3px solid #e53935;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .modal-pokemon-overlay {
+    align-items: center;
+    padding: 12px;
+  }
+
+  .modal-pokemon-conteudo {
+    width: 100%;
+    max-height: calc(100dvh - 24px);
+    border-radius: 16px;
+  }
+
+  .modal-pokemon-conteudo .formulario-pokemon {
+    padding: 56px 16px 20px;
+    border-radius: 16px;
+  }
+
+  .modal-pokemon-fechar {
+    top: 12px;
+    right: 12px;
+  }
+}
+

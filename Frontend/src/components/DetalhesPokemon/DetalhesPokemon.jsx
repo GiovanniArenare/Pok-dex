@@ -16,7 +16,7 @@ const ATRIBUTOS = [
   { nome: "Velocidade", chave: "speed", cor: "velocidade" },
 ];
 
-function DetalhesPokemon({ pokemon, onFechar }) {
+function DetalhesPokemon({ pokemon, onFechar, onEditar, onExcluir }) {
   useEffect(() => {
     function fecharComEsc(evento) {
       if (evento.key === "Escape") {
@@ -189,10 +189,36 @@ function DetalhesPokemon({ pokemon, onFechar }) {
           </div>
         </section>
 
+
+
         <footer className="detalhes-pokemon-rodape">
-          <span className="detalhes-pokemon-ponto" />
-          Dados do Pokémon #{String(pokemon.id).padStart(3, "0")}
+          <div className="detalhes-pokemon-rodape-info">
+            <span className="detalhes-pokemon-ponto" />
+            <span>
+              Dados do Pokémon #{String(pokemon.id).padStart(3, "0")}
+            </span>
+          </div>
+
+          <div className="detalhes-pokemon-acoes">
+            <button
+              type="button"
+              className="detalhes-pokemon-excluir"
+              onClick={() => onExcluir?.(pokemon)}
+            >
+              Excluir Pokémon
+            </button>
+
+            <button
+              type="button"
+              className="detalhes-pokemon-editar"
+              onClick={() => onEditar?.(pokemon)}
+            >
+              ✎ Editar Pokémon
+            </button>
+          </div>
         </footer>
+
+
       </section>
     </div>
   );

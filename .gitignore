@@ -1,0 +1,33 @@
+
+# Variáveis de ambiente e credenciais
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Configurações locais com credenciais
+application-local.properties
+application-secret.properties
+application-secrets.properties
+
+# Chaves e certificados privados
+*.pem
+*.key
+*.p12
+
+# Dependências e arquivos gerados
+node_modules/
+dist/
+target/
+build/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Configurações de editores
+.vscode/
+.idea/
